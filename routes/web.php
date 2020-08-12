@@ -23,6 +23,7 @@ Route::group(['prefix'=>'admin','as'=>'admin'], function(){
     //Productos
     Route::get('/productos', 'ProductoController@index');
     Route::post('/productos/edit', 'ProductoController@editarProducto');
+    Route::post('/productos/insumo', 'ProductoController@agregarInsumos');
     Route::resource('productos', 'ProductoController');
 
     //Usuarios
@@ -39,6 +40,11 @@ Route::group(['prefix'=>'admin','as'=>'admin'], function(){
     Route::get('/mesas', 'MesaController@index');
     Route::post('/mesas/edit', 'MesaController@editarMesa');
     Route::resource('mesas', 'MesaController');
+
+    //Recetas
+    Route::get('/recetas', 'RecetaController@index');
+    Route::post('/recetas/edit', 'RecetaController@editarReceta');
+    Route::resource('recetas', 'RecetaController');
 }); 
 
 Auth::routes();

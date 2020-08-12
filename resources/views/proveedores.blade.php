@@ -73,7 +73,7 @@
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="/admin/proveedores" method="post">
+                <form action="/admin/proveedores" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                 <div class="row">
@@ -156,7 +156,7 @@
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="/admin/proveedores/edit" method="post">
+                <form action="/admin/proveedores/edit" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                 <div class="row">
@@ -206,7 +206,7 @@
                     <div class="col-lg-4 col-sm-4 col-xs-4">
                         <div class="form-group">
                             <label>Imagen:</label>
-                            <input class="form-control" name="rutaImagen" type="file"> 
+                            <input class="form-control" name="rutaImagenEdit" type="file"> 
                         </div>
                     </div>
                 </div>
