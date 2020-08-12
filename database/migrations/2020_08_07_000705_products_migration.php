@@ -22,7 +22,8 @@ class ProductsMigration extends Migration
             $table->float('precio', 8, 2);
             $table->string('rutaImagen');
             $table->integer('stock');
-            $table->integer('estatus');
+            $table->float('estatus');
+            $table->integer('cantidadML');
             $table->rememberToken();
             $table->timestamps();
             $table->foreignId('proveedor_id')

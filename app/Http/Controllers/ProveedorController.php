@@ -35,12 +35,21 @@ class ProveedorController extends Controller
             ->withErrors($validator);
         }
         else{
+            $imagen = $request -> file('rutaImagen');
+            $tituloImg = time().'.'.$imagen->getClientOriginalExtension();
+            $tituloAux = asset('/img/proveedores');
+            $destino = public_path('img/proveedores');
+
+            $request->rutaImagen->move($destino, $tituloImg);
+
+            $rutaFinal = $tituloAux . "/" . $tituloImg;
+
             $proveedor = Proveedor::create([
                 'claveProveedor'=>$request->claveProveedor,
                 'nombre'=>$request->nombre,
                 'descripcion'=>$request->descripcion,
                 'correo'=>$request->correo,
-                'rutaLogo'=>'default.jpg',
+                'rutaLogo'=>$rutaFinal,
                 'telefono'=>$request->telefono,
                 'estatus'=>'1'
             ]);
@@ -77,7 +86,23 @@ class ProveedorController extends Controller
             $proveedor->correo = $request->correoEdit;
             $proveedor->telefono = $request->telefonoEdit;
             $proveedor->descripcion = $request->descripcionEdit;
-            $proveedor->rutaLogo = 'default.jpg';
+            
+            $validator2 = Validator::make($request->all(),[
+                'rutaImagenEdit'=>'required|image|mimes:jpg,jpeg,png,gif|max:2048'
+            ]);
+
+            if(!$validator2->fails()){
+                $imagen = $request -> file('rutaImagenEdit');
+                $tituloImg = time().'.'.$imagen->getClientOriginalExtension();
+                $tituloAux = asset('/img/proveedores');
+                $destino = public_path('img/proveedores');
+
+                $request->rutaImagenEdit->move($destino, $tituloImg);
+
+                $rutaFinal = $tituloAux . "/" . $tituloImg;
+                $proveedor->rutaLogo = $rutaFinal;
+            }
+
             $proveedor->estatus = '1';
             $proveedor->save();
             return back()->with('Listo', 'El registro se actualizó correctamente');

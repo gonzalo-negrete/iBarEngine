@@ -31,6 +31,7 @@ class UserController extends Controller
             'pass1'=>'required|min:6|required_with:pass2|same:pass2',
             'pass2'=>'required|min:6',
             'nivel'=>'required',
+            'img'=>'required|image|mimes:jpg,jpeg,png,gif|max:2048'
         ]);
         if($validator ->fails()){
             return back()
@@ -39,6 +40,14 @@ class UserController extends Controller
             ->withErrors($validator);
         }
         else{
+            $imagen = $request -> file('img');
+            $tituloImg = time().'.'.$imagen->getClientOriginalExtension();
+            $tituloAux = asset('/img/usuarios');
+            $destino = public_path('img/usuarios');
+            $request->img->move($destino, $tituloImg);
+
+            $rutaFinal = $tituloAux . "/" . $tituloImg;
+
             $usuario = User::create([
                 'name'=>$request->name,
                 'email'=>$request->email,
@@ -47,7 +56,7 @@ class UserController extends Controller
                 'nivel'=>$request->nivel,
                 'telefono'=>$request->telefono,
                 'estatus'=>'1',
-                'img'=>'default.jpg',
+                'img'=>$rutaFinal,
                 'password'=>Hash::make($request->pass1)
             ]);
             return back()->with('Listo', 'El usuario fue agregado de manera correcta');
@@ -93,6 +102,21 @@ class UserController extends Controller
 
             if(!$validator2->fails()){
                 $user->password = Hash::make($request->pass1Edit);
+            }
+
+            $validator3 = Validator::make($request->all(),[
+                'imgEdit'=>'required|image|mimes:jpg,jpeg,png,gif|max:2048'
+            ]);
+
+            if(!$validator3->fails()){
+                $imagen = $request -> file('imgEdit');
+                $tituloImg = time().'.'.$imagen->getClientOriginalExtension();
+                $tituloAux = asset('/img/usuarios');
+                $destino = public_path('img/usuarios');
+                $request->imgEdit->move($destino, $tituloImg);
+
+                $rutaFinal = $tituloAux . "/" . $tituloImg;
+                $user->img = $rutaFinal;
             }
 
             $user->save();

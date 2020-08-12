@@ -72,7 +72,7 @@
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="/admin/usuarios" method="post">
+                <form action="/admin/usuarios" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                 <div class="row">
@@ -140,6 +140,7 @@
                                 <option value=""></option>
                                 <option value="empleado">Empleado</option>
                                 <option value="gerente">Gerente</option>
+                                <option value="admin">Administrador</option>
                             </select>
                         </div>
                     </div>
@@ -189,7 +190,7 @@
     </div>
     <!-- Fin de modal eliminar -->
 
-    <!-- Modal agregar -->
+    <!-- Modal editar -->
     <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -199,7 +200,7 @@
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="/admin/usuarios/edit" method="post">
+                <form action="/admin/usuarios/edit" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                 <div class="row">
@@ -268,6 +269,7 @@
                                 <option value=""></option>
                                 <option value="empleado">Empleado</option>
                                 <option value="gerente">Gerente</option>
+                                <option value="admin">Administrador</option>
                             </select>
                         </div>
                     </div>
@@ -293,7 +295,7 @@
             </div>
         </div>
     </div>
-    <!-- Fin de modal agregar -->
+    <!-- Fin de modal editar -->
 @endsection
 
 @section('scripts')

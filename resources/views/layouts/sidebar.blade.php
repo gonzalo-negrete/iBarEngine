@@ -42,6 +42,12 @@
           <span>Productos</span></a>
       </li>
 
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/recetas">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Recetas</span></a>
+      </li>
+
       <div class="sidebar-heading">
         Recursos humanos
       </div>
