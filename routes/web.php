@@ -50,3 +50,7 @@ Route::group(['prefix'=>'admin','as'=>'admin'], function(){
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/products', 'ProductsController@products')->name('products');
+Route::get('product.detail/{id}', 'ProductsController@detail');
+Route::get('cart', 'ProductsController@cart');
+Route::get('add-to-cart/{id}', 'ProductsController@addToCart');
