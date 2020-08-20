@@ -7,6 +7,7 @@ use Validator;
 use App\Producto;
 use App\Insumo;
 use App\Movimiento_Insumo;
+use Auth;
 
 class ProductoController extends Controller
 {
@@ -24,6 +25,10 @@ class ProductoController extends Controller
                     ->select('proveedores.id','proveedores.nombre')
                     ->orderby('nombre','ASC')
                     ->get();
+        
+        if(Auth::User()->nivel == 'empleado' || Auth::User()->nivel == 'cliente'){
+            return redirect('/admin');
+        }
 
         return view('productos')->with('productos',$productos)
                                 ->with('proveedores',$proveedores);
@@ -156,18 +161,17 @@ class ProductoController extends Controller
                 $producto->stock = $total;
 
                 $producto->save();
+        
+                $insumos = Insumo::where('producto_id',$request->idPro)->first();
 
-                $insumos = \DB::table('insumos')
-                ->select('insumos.*')
-                ->where('producto_id', '=', $request->idPro)
-                ->get();
+                //$insumos = $insumosAux->first();
 
-                if(count($insumos) >= 1){
+                if($insumos != null){
                     
                     $a1 = $insumos->totalML;
-                    
-                    $a2 = $a1 + $request->totalML;
-                    $insumos->totalML = $a2;
+                    $a2 = $request->totalML;
+                    $a3 = $a1 + $a2;
+                    $insumos->totalML = $a3;
                     $insumos->save();
                 }
                 else{

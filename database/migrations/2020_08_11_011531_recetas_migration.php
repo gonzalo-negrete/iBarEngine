@@ -18,6 +18,7 @@ class RecetasMigration extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('descripcion');
+            $table->float('precio');
             $table->string('rutaImagen');
             $table->integer('estatus');
             $table->rememberToken();

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\User;
 use Hash;
+use Auth;
 
 class UserController extends Controller
 {
@@ -18,6 +19,11 @@ class UserController extends Controller
                     ->select('users.*')
                     ->orderBy('id','DESC')
                     ->get();
+
+        if(Auth::User()->nivel != 'admin'){
+            return redirect('/admin');
+        }
+
         return view('usuarios')->with('usuarios',$usuarios);
     }
 
