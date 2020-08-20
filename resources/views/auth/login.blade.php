@@ -71,3 +71,4 @@
     </div>
 </div>
 @endsection
+<link rel="stylesheet" type="text/css" href="{{ asset('/dashC/css/inicioSesion.blade.php') }}">
