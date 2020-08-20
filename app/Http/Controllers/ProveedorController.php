@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Proveedor;
+use Auth;
 
 class ProveedorController extends Controller
 {
@@ -17,6 +18,11 @@ class ProveedorController extends Controller
                     ->select('proveedores.*')
                     ->orderBy('id','DESC')
                     ->get();
+
+        if(Auth::User()->nivel != 'admin'){
+            return redirect('/admin');
+        }
+
         return view('proveedores')->with('proveedores',$proveedores);
     }
 
