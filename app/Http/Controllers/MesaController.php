@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Mesa;
 use Validator;
+use Auth;
 
 class MesaController extends Controller
 {
@@ -17,6 +18,11 @@ class MesaController extends Controller
                     ->select('mesas.*')
                     ->orderBy('id','DESC')
                     ->get();
+
+        if(Auth::User()->nivel != 'admin'){
+            return redirect('/admin');
+        }
+
         return view('mesas')->with('mesas',$mesas);
     }
 

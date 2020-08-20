@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Dashboard</title>
+  <title>iBarEngine</title>
 
   <!-- Custom fonts for this template-->
   <link href="{{ asset('/dash/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -107,6 +107,8 @@
   <!-- Page level custom scripts -->
   <script src="{{ asset('/dash/js/demo/chart-area-demo.js') }}"></script>
   <script src="{{ asset('/dash/js/demo/chart-pie-demo.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('/dash/ckeditor/ckeditor.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('/dash/ckeditor/config.js') }}"></script>
   @yield('scripts')
 </body>
 
