@@ -13,9 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::resource('reservations','ReservationController');
+
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Route::group(['prefix'=>'admin','as'=>'admin'], function(){
     Route::get('/', 'AdminController@index');
@@ -25,6 +28,12 @@ Route::group(['prefix'=>'admin','as'=>'admin'], function(){
     Route::post('/productos/edit', 'ProductoController@editarProducto');
     Route::post('/productos/insumo', 'ProductoController@agregarInsumos');
     Route::resource('productos', 'ProductoController');
+
+    //Reservaciones
+    Route::get('/reservations', 'ReservationController@index');
+    Route::post('/reservations/edit', 'ReservationController@editarProducto');
+    Route::post('/reservations/insumo', 'ReservationController@agregarInsumos');
+    Route::resource('reservations', 'ReservationController');
 
     //Usuarios
     Route::get('/usuarios', 'UserController@index');
@@ -49,8 +58,57 @@ Route::group(['prefix'=>'admin','as'=>'admin'], function(){
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/products', 'ProductsController@products')->name('products');
-Route::get('product.detail/{id}', 'ProductsController@detail');
-Route::get('cart', 'ProductsController@cart');
-Route::get('add-to-cart/{id}', 'ProductsController@addToCart');
+Route::bind('producto', function($id){
+    return App\Producto::where('id', $id)->first();
+});
+
+
+Route::get('/home', [
+    'as'=>'home',
+    'uses'=>'StoreController@index'
+]);
+
+Route::get('producto/{id}', [
+    'as'=>'product-detail',
+    'uses'=>'StoreController@show'
+]);
+
+Auth::routes();
+//carrito
+
+Route::get('cart/show', [
+    'as'=>'cart-show',
+    'uses'=>'CartController@show'
+]);
+
+Route::get('cart/add/{producto}', [
+    'as'=>'cart-add',
+    'uses'=>'CartController@add'
+]);
+
+Route::get('cart/delete/{producto}', [
+    'as'=>'cart-delete',
+    'uses'=>'CartController@delete'
+]);
+
+Route::get('cart/trash', [
+    'as'=>'cart-trash',
+    'uses'=>'CartController@trash'
+]);
+
+Route::get('cart/compra', [
+    'as'=>'cart-compra',
+    'uses'=>'CartController@compra'
+]);
+
+Route::get('cart/update/{producto}/{quantity?}', [
+    'as'=>'cart-update',
+    'uses'=>'CartController@update'
+]);
+
+
+Route::get('order-detail',[
+    'middleware' => 'auth',
+    'as'=> 'order-detail',
+    'uses'=> 'CartController@orderDetail'
+]);
