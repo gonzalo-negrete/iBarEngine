@@ -19,6 +19,10 @@ class ProveedorController extends Controller
                     ->orderBy('id','DESC')
                     ->get();
 
+        if(Auth::User()->nivel == 'cliente'){
+            return redirect('/');
+        }
+
         if(Auth::User()->nivel != 'admin'){
             return redirect('/admin');
         }

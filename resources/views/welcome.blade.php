@@ -47,7 +47,7 @@
   <a class="navbar-brand" href="{{ route('home') }}"><i class="fa fa-beer"></i> Productos <span class="sr-only">(current)</span></a>
   @if(Auth::check())
 	<div class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-circle fa-2x" aria-hidden="true"></i> {{ Auth::user()->aPaterno }} </a>
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-circle fa-2x" aria-hidden="true"></i> {{ Auth::user()->name }} </a>
         <div class="dropdown-menu">
         	<form id="logout-form" action="{{ route('logout') }}" method="POST">
               @csrf

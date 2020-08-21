@@ -227,7 +227,8 @@
                     </div>
                     <div class="col-lg-4 col-sm-4 col-xs-4">
                         <div class="form-group">
-                            <label>Cantidad de mililitros:</label>
+                            <label>Cantidad:</label>
+                            <label>Para productos incontables se registra en ML/GR y para productos contables en Unidades</label>
                             <input class="form-control" name="cantidadML" type="number" value="{{ old('cantidadML') }}"> 
                         </div>
                     </div>

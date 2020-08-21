@@ -79,6 +79,12 @@
           <span>Mesas</span></a>
       </li>
 
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/reservations">
+          <i class="fas fa-fw fa-calendar"></i>
+          <span>Reservaciones</span></a>
+      </li>
+
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
@@ -143,6 +149,12 @@
           <span>Insumos</span></a>
       </li>
 
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/reservations">
+          <i class="fas fa-fw fa-calendar"></i>
+          <span>Reservaciones</span></a>
+      </li>
+
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
@@ -177,6 +189,12 @@
         <a class="nav-link" href="/admin/caja">
           <i class="fas fa-fw fa-credit-card"></i>
           <span>Caja</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/reservations">
+          <i class="fas fa-fw fa-calendar"></i>
+          <span>Reservaciones</span></a>
       </li>
 
       <!-- Divider -->

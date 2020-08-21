@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class AdminController extends Controller
 {
@@ -11,6 +12,10 @@ class AdminController extends Controller
     }
 
     public function index(){
+        if(Auth::User()->nivel == 'cliente'){
+            return redirect('/');
+        }
+
         return view('admin');
     }
 }

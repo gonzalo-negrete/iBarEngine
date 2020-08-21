@@ -25,8 +25,12 @@ class ProductoController extends Controller
                     ->select('proveedores.id','proveedores.nombre')
                     ->orderby('nombre','ASC')
                     ->get();
-        
-        if(Auth::User()->nivel == 'empleado' || Auth::User()->nivel == 'cliente'){
+                    
+        if(Auth::User()->nivel == 'cliente'){
+            return redirect('/');
+        }
+
+        if(Auth::User()->nivel == 'empleado'){
             return redirect('/admin');
         }
 
@@ -36,7 +40,7 @@ class ProductoController extends Controller
 
     public function store(Request $request){
         $validator = Validator::make($request->all(),[
-            'nombre'=>'required|min:3|max:20',
+            'nombre'=>'required|min:3',
             'claveProducto'=>'required|min:3|max:20',
             'precio'=>'required',
             'stock'=>'required',
@@ -87,7 +91,7 @@ class ProductoController extends Controller
         $producto = Producto::find($request->id);
 
         $validator = Validator::make($request->all(),[
-            'nombre'=>'required|min:3|max:20',
+            'nombre'=>'required|min:3',
             'claveProducto'=>'required|min:3|max:20',
             'precio'=>'required',
             'stock'=>'required',

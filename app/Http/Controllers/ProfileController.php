@@ -20,7 +20,7 @@ class ProfileController extends Controller
                     ->get();
         
         if(Auth::User()->nivel == 'cliente'){
-            return redirect('/admin');
+            return redirect('/');
         }
 
         return view('profiles')->with('datos',$datos);

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Producto;
 use App\Venta;
-use App\VentaProducto;
+use App\Venta_Producto;
 use Carbon\Carbon;
 use DateTime;
 
@@ -107,11 +107,11 @@ class CartController extends Controller
 		foreach ($cart as $producto) {
 			$subtotal += $producto->quantity * $producto->precio;
 		}
-		$date = Carbon::now()->toDateTimeString();
+		$date = new DateTime();
 		
 		$venta = Venta::create([
 			'total'=>$subtotal,
-			'fechaVenta'=> $date,
+			'fechaVenta'=> $date->format('d-m-Y'),
 			'estatus'=> 1,
 			'tipoPago'=> "Tarjeta",
 			'observacionMerma' => "",
@@ -127,9 +127,16 @@ class CartController extends Controller
 
 	protected function saveVentaProducto($producto, $venta_id)
 	{
-		VentaProducto::create([
+		Venta_Producto::create([
 			'producto_id' => $producto->id,
 			'venta_id' => $venta_id,
 		]);
+
+		$productoF = Producto::find($producto->id);
+		
+		$NP = $productoF->stock;
+		$productoF->stock = ($NP-$producto->quantity);
+
+		$productoF->save();
 	}
 }

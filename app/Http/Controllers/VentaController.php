@@ -16,7 +16,11 @@ class VentaController extends Controller
 
         $ventas = Venta::where('estatus','1')->get();
 
-        if(Auth::User()->nivel == 'empleado' || Auth::User()->nivel == 'cliente'){
+        if(Auth::User()->nivel == 'cliente'){
+            return redirect('/');
+        }
+
+        if(Auth::User()->nivel == 'empleado'){
             return redirect('/admin');
         }
 

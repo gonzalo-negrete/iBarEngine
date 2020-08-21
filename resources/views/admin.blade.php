@@ -85,4 +85,16 @@
     </div>
     </div>
 </div>
+<div class="row">
+    <canvas id="myChart" width="400" height="400"></canvas>
+</div>
+@endsection
+
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            
+        });
+    </script>
 @endsection

@@ -19,7 +19,11 @@ class InsumoController extends Controller
                     ->orderBy('id','DESC')
                     ->get();
             
-        if(Auth::User()->nivel == 'empleado' || Auth::User()->nivel == 'cliente'){
+        if(Auth::User()->nivel == 'cliente'){
+            return redirect('/');
+        }
+
+        if(Auth::User()->nivel == 'empleado'){
             return redirect('/admin');
         }
         

@@ -10,6 +10,7 @@ use App\Venta;
 use App\User;
 use Validator;
 use DateTime;
+use DateInterval;
 
 class ReporteController extends Controller
 {
@@ -22,6 +23,10 @@ class ReporteController extends Controller
                     ->select('reportes.*')
                     ->orderBy('id','DESC')
                     ->get();
+
+        if(Auth::User()->nivel == 'cliente'){
+            return redirect('/');
+        }
 
         if(Auth::User()->nivel != 'admin'){
             return redirect('/admin');
@@ -110,7 +115,7 @@ class ReporteController extends Controller
             $pdf->loadHTML($content);
         }
 
-        return $pdf->download('Reporte'.$date->format("d-m-Y").'-'.$tipoR.'.pdf');
+        return $pdf->stream('Reporte'.$date->format("d-m-Y").'-'.$tipoR.'.pdf');
     }
 
     public function crearM(Request $request){
@@ -155,7 +160,7 @@ class ReporteController extends Controller
         $pdf = app('dompdf.wrapper');
         $pdf->loadHTML($content);
 
-        return $pdf->download('Reporte'.$date->format("d-m-Y").'-Mermas.pdf');
+        return $pdf->stream('Reporte'.$date->format("d-m-Y").'-Mermas.pdf');
     }
 
     public function crearV(Request $request){
@@ -163,6 +168,7 @@ class ReporteController extends Controller
 
         $content = html_entity_decode($reportes->contenido, ENT_QUOTES);
         $tabla = "";
+        $totalFinal = 0;
         $date = new DateTime();
 
         $content = str_replace('#Fecha#', $date->format('d-m-Y'), $content);
@@ -171,6 +177,9 @@ class ReporteController extends Controller
 
         $fechaInicio = new DateTime($request->dateInicio);
         $fechaFin = new DateTime($request->dateFin);
+
+        $fechaInicio->add(new DateInterval('P1D'));
+        $fechaFin->add(new DateInterval('P1D'));
 
         if($request->tipoR == '2'){
             $ventas = Venta::where('fechaVenta','>=', $fechaInicio->format('d-m-y'))
@@ -193,16 +202,20 @@ class ReporteController extends Controller
         $tabla .= "<th style='text-align:left'>Tipo de pago</th>";
         $tabla .= "<th style='text-align:right'>Fecha de merma</th>";
         $tabla .= "<th style='text-align:right'>Total</th>";
+        $tabla .= "<th style='text-align:right'>Totales</th>";
         $tabla .= "</tr>";
         $tabla .= "</thead>";
         $tabla .= "<tbody>";
         foreach($ventas as $v){
+            $totalFinal = $totalFinal + $v->total;
             $tabla .= "<tr>";
             $tabla .= "<td style='text-align:left'>".$v->tipoPago."</td>";
             $tabla .= "<td style='text-align:right'>".$v->fechaVenta."</td>";
-            $tabla .= "<td style='text-align:right'>".$v->total."</td>";
+            $tabla .= "<td style='text-align:right'>$ ".$v->total."</td>";
+            $tabla .= "<td style='text-align:right'>----</td>";
             $tabla .= "</tr>";
         }
+        $tabla .= "<tr><td></td><td style='text-align:right'>Total de las ventas:</td><td style='text-align:right'>$ ".$totalFinal."</td><td></td></tr>";
         $tabla .= "</tbody>";
         $tabla .= "</table>";
         $content = str_replace('#Content#', $tabla, $content);
@@ -210,7 +223,7 @@ class ReporteController extends Controller
         $pdf = app('dompdf.wrapper');
         $pdf->loadHTML($content);
 
-        return $pdf->download('Reporte'.$date->format("d-m-Y").'-Ventas.pdf');
+        return $pdf->stream('Reporte'.$date->format("d-m-Y").'-Ventas.pdf');
     }
 
     public function editarReporte(Request $request){

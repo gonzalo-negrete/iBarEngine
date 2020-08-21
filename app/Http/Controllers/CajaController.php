@@ -11,6 +11,7 @@ use App\Venta_Receta;
 use App\Insumo;
 use Validator;
 use DateTime;
+use Auth;
 
 class CajaController extends Controller
 {
@@ -28,6 +29,10 @@ class CajaController extends Controller
                     ->select('recetas.*')
                     ->orderBy('id','DESC')
                     ->get();
+
+        if(Auth::User()->nivel == 'cliente'){
+            return redirect('/');
+        }
 
         return view('caja')->with('productos',$productos)
                            ->with('recetas',$recetas);

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Reservation;
 use App\Mesa;
 use Validator;
+use Auth;
 
 class ReservationController extends Controller
 {
@@ -19,11 +20,18 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        
-        $reservations = Reservation::all();
-        $mesas = $this->indexM();
-        return view('reservations.index',compact('reservations', 'mesas'));
-        
+        if(Auth::User()->nivel == 'cliente'){
+            $reservations = Reservation::all();
+            $mesas = $this->indexM();
+            return view('reservations.index',compact('reservations', 'mesas'));
+        }
+
+        $reservaciones = \DB::table('reservations')
+                    ->select('reservations.*')
+                    ->orderby('id','ASC')
+                    ->get();
+
+        return view('reservaciones')->with('reservaciones',$reservaciones);
     }
 
     public function indexM()

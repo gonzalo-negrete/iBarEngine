@@ -208,11 +208,11 @@
                     <div class="row">
                         <div class="col-6">
                             <label>Fecha inicio</label>
-                            <input class="form-control" type="date" name="dateInicio" id="dateInicio" max="2020-08-18">
+                            <input class="form-control" type="date" name="dateInicio" id="dateInicio" max=<?php $hoy=date("Y-m-d"); echo $hoy;?>>
                         </div>
                         <div class="col-6">
                             <label>Fecha Fin</label>
-                            <input class="form-control" type="date" name="dateFin" id="dateFin" max="2020-08-18">
+                            <input class="form-control" type="date" name="dateFin" id="dateFin" max=<?php $hoy=date("Y-m-d"); echo $hoy;?>>
                         </div>
                     </div>
                 </div>
@@ -272,11 +272,11 @@
                     <div class="row">
                         <div class="col-6">
                             <label>Fecha inicio</label>
-                            <input class="form-control" type="date" name="dateInicio" id="dateInicio" max="2020-08-18">
+                            <input class="form-control" type="date" name="dateInicio" id="dateInicio" max=<?php $hoy=date("Y-m-d"); echo $hoy;?>>
                         </div>
                         <div class="col-6">
                             <label>Fecha Fin</label>
-                            <input class="form-control" type="date" name="dateFin" id="dateFin" max="2020-08-18">
+                            <input class="form-control" type="date" name="dateFin" id="dateFin" max=<?php $hoy=date("Y-m-d"); echo $hoy;?>>
                         </div>
                     </div>
                 </div>
